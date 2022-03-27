@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "./index.css";
+import { createBrowserHistory } from "history";
+import { Route, withRouter} from "react-router-dom";
+import { renderRouteAdmin} from "./routes";
+import { Suspense, lazy } from "react";
+import Loader from "./components/Loader";
+import ScrollToTop from "./components/ScrollToTop";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { actTryLogin } from "./Admin/AuthPage/modules/actions";
+export const history = createBrowserHistory();
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+function App(props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actTryLogin(props.history));
+  }, []);
+  return  (
+    <Suspense
+     fallback = {
+       <>
+       <Loader />
+       </>
+     }
+     >
+       <ScrollToTop>
+         {renderRouteAdmin()}
+         <Route
+         path="/admim"
+         exact
+         component = {lazy(() => import("./Admin/AuthPage"))}
+         />
+       </ScrollToTop>
+     </Suspense>
   );
 }
-
-export default App;
+export default withRouter(App);
