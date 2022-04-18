@@ -1,53 +1,31 @@
 import { lazy } from "react";
-
-// import HomeTemplate from "../containers/Home";
-import AdminTemplate from "../Admin";
-
+import AdminTemplate from "../containers/Admin";
+import QCManagerTemplate from "../containers/QC_Manager";
+import StaffTemplate from "../containers/Staff";
 const routesAdmin = [
   {
     exact: false,
     path: "/dashboard",
-    component: lazy(() => import("../Admin/Dashboard")),
+    component: lazy(() => import("../containers/Admin/Dashboard")),
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard/editfilm/:id",
-  //   component: lazy(() => import("../containers/Admin/Film/EditFilm/EditFilm")),
-  // },
-  // {
-  //   eaxct: false,
-  //   path: "/dashboard/film",
-  //   component: lazy(() => import("../containers/Admin/Film/film")),
-  // },
-  // {
-  //   eaxct: false,
-  //   path: "/dashboard/user",
-  //   component: lazy(() => import("../containers/Admin/User")),
-  // },
-  // {
-  //   eaxct: false,
-  //   path: "/dashboard/adduser",
-  //   component: lazy(() => import("../containers/Admin/User/AddUser")),
-  // },
-  // {
-  //   eaxct: false,
-  //   path: "/dashboard/show",
-  //   component: lazy(() => import("../containers/Admin/Showtime")),
-  // },
 ];
 
-// function renderRouteHome() {
-//   return routesHome.map((route, index) => {
-//     return (
-//       <HomeTemplate
-//         key={index}
-//         exact={route.exact}
-//         path={route.path}
-//         Component={route.component}
-//       />
-//     );
-//   });
-// }
+const routesQC = [
+  {
+    exact: false,
+    path: "/QC/dashboard",
+    component: lazy(() => import("../containers/QC_Manager/Dashboard")),
+  },
+];
+
+const routesStaff = [
+  {
+    exact: false,
+    path: "/Staff/dashboard",
+    component: lazy(() => import("../containers/Staff/Dashboard")),
+  },
+];
+
 function renderRouteAdmin() {
   return routesAdmin.map((route, index) => {
     return (
@@ -61,4 +39,30 @@ function renderRouteAdmin() {
   });
 }
 
-export { renderRouteAdmin };
+function renderRouteQC() {
+  return routesQC.map((route, index) => {
+    return (
+      <QCManagerTemplate
+        key={index}
+        exact={route.exact}
+        path={route.path}
+        Component={route.component}
+      />
+    );
+  });
+}
+
+function renderRouteStaff() {
+  return routesStaff.map((route, index) => {
+    return (
+      <StaffTemplate
+        key={index}
+        exact={route.exact}
+        path={route.path}
+        Component={route.component}
+      />
+    );
+  });
+}
+
+export { renderRouteAdmin, renderRouteQC, renderRouteStaff };
